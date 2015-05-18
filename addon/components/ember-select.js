@@ -5,11 +5,16 @@ import layout from '../templates/components/ember-select';
 const {Component, computed, observer, isEmpty, isBlank} = Ember;
 
 export default Component.extend({
-  className: 'ember-select',
+  classNames: ['ember-select'],
+  classNameBindings: ['isOpen'],
   layout: layout,
 
   searchTerm: null,
   content: null,
+
+  isOpen: false,
+  hasSelection: computed.notEmpty('selection'),
+
 
   scoreFunction: computed(function() {
     return function(term, item) {
@@ -50,5 +55,139 @@ export default Component.extend({
 
     return Ember.A(content.objectsAt(indexes));
   }),
+
+  didInsertElement: function () {
+    var width = this.$().width() - 2; //border
+    this.set('_width', width);
+  },
+
+  /**
+  * Closes the dropdown when focus changes to another element outside
+  * or if focus lost by clicking outside. Bound to focusOut.
+  *
+  * @method lostFocus
+  */
+  // lostFocus: Ember.on('focusOut', function() {
+  //   if(this.get('isOpen')) {
+  //     Ember.run.later(this, function() {
+  //       var focussedElement = document.activeElement;
+  //       var target = this.$();
+  //       if (target) {
+  //         var isFocussedOut = target.has(focussedElement).length === 0 && !target.is(focussedElement);
+
+  //         if(isFocussedOut) {
+  //           this.set('isOpen', false);
+  //         }
+  //       }
+  //     }, 0);
+  //   }
+  // }),
+
+  /**
+  * Handles the keydown event once the component gains focus.
+  * Bound to keydown.
+  *
+  * @method navigateOnKeyDown
+  */
+  navigateOnKeyDown: Ember.on('keyDown', function(event) {
+    var handled = false;
+
+    switch(event.keyCode) {
+      //esc
+      case 27:
+        this.closeOptions();
+        handled = true;
+        break;
+
+      //up-arrow
+      case 38:
+        if(this.get('isOpen')) {
+          this.send('highlightPreviousItem')
+        }
+        handled = true;
+        break;
+
+      //down-arrow
+      case 40:
+        if(this.get('isOpen')) {
+          this.send('highlightNextItem')
+        } else {
+          this.openOptions();
+        }
+        handled = true;
+        break;
+
+      //enter
+      case 13:
+        if(this.get('isOpen')) {
+          var index = this.get('options.focusIndex');
+          var option = this.get('options.options').objectAt(index);
+          option.selectOption(event);
+          if(!option.get('isDisabled')) {
+            this.closeOptions();
+          }
+        } else {
+          this.openOptions();
+        }
+        handled = true;
+        break;
+    }    
+
+    if(handled) {
+      event.preventDefault();
+    }
+  }),
+
+  click: function() {
+    this.set('isOpen', true);
+  },
+
+  // highlightedIndex: computed('highlighted', function() {
+  //   var content = this.get('_content');
+  //   var highlighted = this.get('highlighted');
+
+  //   if (!isEmpty(content)) {
+  //     return content.indexOf(highlighted);
+  //   }
+
+  // }),
+
+
+
+  actions: {
+    highlightNextItem: function() {
+      var content = this.get('_content');
+      var highlighted = this.get('highlighted') || content.objectAt(0);
+      var index = this.get('highlightedIndex') + 1;
+      var next = content.objectAt(index);
+
+      this.set('highlighted', next);
+    },
+
+    highlightPreviousItem: function() {
+      var content = this.get('_content');
+      var highlighted = this.get('highlighted') || content.objectAt(0);
+      var index = content.indexOf(highlighted) - 1;
+      var prev = content.objectAt(index);
+
+      this.set('highlighted', prev);
+    },
+
+    highlight: function(item) {
+      this.set('highlighted', item);
+    },
+
+    openDropdown: function() {
+      this.set('isOpen', true);
+    },
+
+    closeDropdown: function() {
+      this.set('isOpen', false);
+    },
+
+    toggleDropdown: function() {
+      this.toggleProperty('isOpen');
+    }
+  }
 
 });

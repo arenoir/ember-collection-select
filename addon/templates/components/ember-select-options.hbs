@@ -1,4 +1,5 @@
-{{#ember-list items=content height="400" width=width rowHeight="60" }}
-  {{word}}
-{{/ember-list}}
+{{#ember-list items=content height="400" width=width rowHeight="60" highlighted=highlighted}}
 
+  {{ember-select-option item=content highlighted=controller.highlighted highlight="highlight"}}
+
+{{/ember-list}}
