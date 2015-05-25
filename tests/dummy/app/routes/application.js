@@ -7,7 +7,13 @@ export default Ember.Route.extend({
 
   actions: {
     search: function(term) {
-      this.dictionary.search(term);
+      var ctlr = this.get('controller');
+      var searching = this.dictionary.search(term);
+      ctlr.set('loading', true);
+
+      searching.then(function() {
+        ctlr.set('loading', false);
+      });
     }
   }
 });

@@ -99,6 +99,23 @@ $ember-select-caret-margin-rtl: 0 4px 0 -2px;
 
 .ember-select {
   position: relative;
+
+  input {
+
+  }
+
+  .clear {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+  }
+
+  .loading {
+    position: absolute;
+    top: 5px;
+    right: 25px;
+  }
+
 }
 
 .ember-select-dropdown, .ember-select-input, .ember-select-input input {

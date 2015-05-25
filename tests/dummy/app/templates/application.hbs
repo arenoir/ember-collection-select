@@ -20,7 +20,13 @@
 
   <div class="row">
     <div class="col-sm-12">
-      {{ember-select content=model optionLabelPath="word" search="search"}}
+      {{ember-select 
+        content=model 
+        optionFunction=optionFunction 
+        selectionLabelPath="word" 
+        search="search"
+        loading=loading
+      }}
     </div>
 
   </div>

@@ -6,4 +6,4 @@ export default {
 
     dictionary.search('a');
   }
-}
+};

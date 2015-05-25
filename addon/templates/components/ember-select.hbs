@@ -1,18 +1,20 @@
-{{ember-select-selection selection=selection labelPath=optionLabelPath}}
+<div class="ember-select-input">
+  {{ember-select-selection selection=selection labelPath=selectionLabelPath}}
 
-{{input type="text" value=searchTerm class="ember-select-input"}}
+  {{input type="text" value=searchTerm}}
 
-{{#if hasSelection}}
-  <a action={{clearSelection}}>x</a>
-{{/if}}
-
-<span class="arrow"></span>
+  {{#if loading}}
+    <span class="loading">loading</span>
+  {{/if}}
+  <span class="arrow"></span>
+</div>
 
 {{#if isOpen}}
   {{ember-select-options
     content=_content 
     selection=selection 
     optionLabelPath=optionLabelPath
+    optionFunction=optionFunction
     rowHeight=optionHeight
     height=height
     width=_width

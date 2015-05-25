@@ -2,7 +2,7 @@ import Ember from 'ember';
 import score from 'ember-select/utils/score';
 import layout from '../templates/components/ember-select';
 
-const {Component, observer, computed, isBlank} = Ember;
+const {Component, observer, computed, isBlank, get} = Ember;
 
 export default Component.extend({
   classNames: ['ember-select'],
@@ -20,6 +20,20 @@ export default Component.extend({
       var word = item.word;
 
       return score(word, term);
+    };
+  }),
+
+  optionFunction: computed('optionLabelPath', function() {
+    var optionLabelPath = this.get('optionLabelPath');
+
+    if (isBlank(optionLabelPath)) {
+      return function(item) {
+        return item;
+      };
+    }
+
+    return function(item) {
+      return get(item, optionLabelPath);
     };
   }),
 
@@ -155,22 +169,16 @@ export default Component.extend({
   }),
 
   click: function() {
+    this.$('input').focus();
     this.toggleProperty('isOpen');
   },
 
-  // highlightedIndex: computed('highlighted', function() {
-  //   var content = this.get('_content');
-  //   var highlighted = this.get('highlighted');
-
-  //   if (!isEmpty(content)) {
-  //     return content.indexOf(highlighted);
-  //   }
-
-  // }),
-
-
-
   actions: {
+
+    'select-item': function(item) {
+      this.addSelection(item);
+    },
+
     highlightNextItem: function() {
       var content = this.get('_content');
       var highlighted = this.get('highlighted') || content.objectAt(0);

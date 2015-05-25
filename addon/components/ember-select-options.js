@@ -1,40 +1,17 @@
-// import Ember from 'ember';
-// import ListView from 'ember-list-view';
-// import ListItemView from 'ember-list-view/list-item-view';
-
-// import layout from '../templates/components/ember-select-options';
-
-// export default Ember.Component.extend({
-//   classNames: ['ember-select-dropdown'],
-//   layout: layout,
-//   height: 400,
-//   width: null,
-//   optionHeight: 60,
-//   highlighted: null,
-
-//   actions: {
-//     highlight: function(item) {
-//       this.set('highlighted', item);
-//     },
-//   }
-// });
-
 import Ember from 'ember';
 import ListView from 'ember-list-view';
 import ListItemView from 'ember-list-view/list-item-view';
 
-const {TargetActionSupport, computed} = Ember;
-//import layout from '../templates/components/ember-select-options';
+const {ViewTargetActionSupport, computed} = Ember;
 
-export default ListView.extend( TargetActionSupport, {
+export default ListView.extend( {
   classNames: ['ember-select-dropdown'],
-  //layout: layout,
   height: 400,
   width: null,
   rowHeight: 60,
   highlighted: null,
 
-  itemViewClass: ListItemView.extend({
+  itemViewClass: ListItemView.extend( ViewTargetActionSupport,{
     templateName: 'ember-select-option',
     classNames: ['ember-select-option'],
     classNameBindings: ['isHighlighted', 'isSelected'],
@@ -47,13 +24,26 @@ export default ListView.extend( TargetActionSupport, {
       return this.get('context') === this.get('controller.selection');
     }),
 
+    value: computed('context', function() {
+      var fmt     = this.get('controller.optionFunction');
+      var context = this.get('context');
+      
+      return fmt(context);
+    }),
+
     mouseEnter: function() {
       var ctlr = this.get('controller');
       var item = this.get('context');
 
       //ctlr.triggerAction('highlight', item);
       ctlr.set('highlighted', item);
+    },
+
+    click: function() {
+      this.triggerAction({action: 'select-item'});
     }
+
   }),
+
 
 });
