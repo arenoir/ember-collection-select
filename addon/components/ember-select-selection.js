@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/ember-select-selection';
 
-const {Component, computed, isBlank} = Ember;
+const {Component, get, computed, isBlank} = Ember;
 
 export default Component.extend({
   layout: layout,
@@ -12,6 +12,7 @@ export default Component.extend({
     var labelPath = this.get('labelPath');
     var selection = this.get('selection');
 
+
     if (isBlank(selection)) {
       return;
     }
@@ -20,7 +21,7 @@ export default Component.extend({
       return selection;
     }
 
-    return selection.get(labelPath);
+    return get(selection, labelPath);
   })
 
 });

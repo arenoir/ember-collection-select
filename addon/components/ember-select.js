@@ -2,7 +2,7 @@ import Ember from 'ember';
 import score from 'ember-select/utils/score';
 import layout from '../templates/components/ember-select';
 
-const {Component, computed, observer, isEmpty, isBlank} = Ember;
+const {Component, computed, isBlank} = Ember;
 
 export default Component.extend({
   classNames: ['ember-select'],
@@ -11,17 +11,16 @@ export default Component.extend({
 
   searchTerm: null,
   content: null,
-
+  multiple: false,
   isOpen: false,
   hasSelection: computed.notEmpty('selection'),
-
 
   scoreFunction: computed(function() {
     return function(term, item) {
       var word = item.word;
 
       return score(word, term);
-    }
+    };
   }),
 
   _content: computed('searchTerm', 'content.@each', function() {
@@ -51,7 +50,7 @@ export default Component.extend({
 
     var indexes = scored.map(function(i) {
       return i.index;
-    })
+    });
 
     return Ember.A(content.objectsAt(indexes));
   }),
@@ -60,6 +59,22 @@ export default Component.extend({
     var width = this.$().width() - 2; //border
     this.set('_width', width);
   },
+
+  addSelection: function(item) {
+    var multiple  = this.get('multiple');
+    var selection = this.get('selection');
+
+    if (multiple) {
+      selection = selection || Ember.A([]);
+      selection.push(item);
+    } else {
+      selection = item;
+    }
+
+    this.set('selection', selection);
+  },
+
+
 
   /**
   * Closes the dropdown when focus changes to another element outside
@@ -95,14 +110,14 @@ export default Component.extend({
     switch(event.keyCode) {
       //esc
       case 27:
-        this.closeOptions();
+        this.send('closeDropdown');
         handled = true;
         break;
 
       //up-arrow
       case 38:
         if(this.get('isOpen')) {
-          this.send('highlightPreviousItem')
+          this.send('highlightPreviousItem');
         }
         handled = true;
         break;
@@ -110,9 +125,9 @@ export default Component.extend({
       //down-arrow
       case 40:
         if(this.get('isOpen')) {
-          this.send('highlightNextItem')
+          this.send('highlightNextItem');
         } else {
-          this.openOptions();
+          this.send('openDropdown');
         }
         handled = true;
         break;
@@ -120,14 +135,9 @@ export default Component.extend({
       //enter
       case 13:
         if(this.get('isOpen')) {
-          var index = this.get('options.focusIndex');
-          var option = this.get('options.options').objectAt(index);
-          option.selectOption(event);
-          if(!option.get('isDisabled')) {
-            this.closeOptions();
-          }
+          this.send('selectHiglightedItem');
         } else {
-          this.openOptions();
+          this.send('openDropdown');
         }
         handled = true;
         break;
@@ -139,7 +149,7 @@ export default Component.extend({
   }),
 
   click: function() {
-    this.set('isOpen', true);
+    this.toggleProperty('isOpen');
   },
 
   // highlightedIndex: computed('highlighted', function() {
@@ -158,7 +168,7 @@ export default Component.extend({
     highlightNextItem: function() {
       var content = this.get('_content');
       var highlighted = this.get('highlighted') || content.objectAt(0);
-      var index = this.get('highlightedIndex') + 1;
+      var index = content.indexOf(highlighted) + 1;
       var next = content.objectAt(index);
 
       this.set('highlighted', next);
@@ -175,6 +185,15 @@ export default Component.extend({
 
     highlight: function(item) {
       this.set('highlighted', item);
+    },
+
+    selectHiglightedItem: function() {
+      var item = this.get('highlighted');
+
+      if (item) {
+        this.addSelection(item);
+        this.send('closeDropdown');
+      }
     },
 
     openDropdown: function() {

@@ -1,8 +1,24 @@
+/*!
+ * Ported from: string_score.js: String Scoring Algorithm 0.1.22
+ *
+ * http://joshaven.com/string_score
+ * https://github.com/joshaven/string_score
+ *
+ * Copyright (C) 2009-2014 Joshaven Potter <yourtech@gmail.com>
+ * Special thanks to all of the contributors listed here https://github.com/joshaven/string_score
+ * MIT License: http://opensource.org/licenses/MIT
+ *
+ * Date: Tue Mar 1 2011
+ * Updated: Tue Mar 10 2015
+*/
+
+
 function score (string, word, fuzziness) {
-  'use strict';
 
   // If the string is equal to the word, perfect match.
-  if (this === word) { return 1; }
+  if (string === word) { 
+    return 1; 
+  }
 
   //if it's not a perfect match and is empty return 0
   if (word === "") { return 0; }
@@ -79,6 +95,6 @@ function score (string, word, fuzziness) {
   }
 
   return finalScore;
-};
+}
 
 export default score;

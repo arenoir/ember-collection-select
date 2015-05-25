@@ -39,7 +39,6 @@ export default ListView.extend( TargetActionSupport, {
     classNames: ['ember-select-option'],
     classNameBindings: ['isHighlighted', 'isSelected'],
 
-
     isHighlighted: computed('context', 'controller.highlighted', function() {
       return this.get('context') === this.get('controller.highlighted');
     }),

@@ -1,8 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('ember-select', 'Unit | Component | ember select', {
-  // Specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: ['component:ember-select-selection', 'component:ember-select-options']
 });
 
 test('it renders', function(assert) {

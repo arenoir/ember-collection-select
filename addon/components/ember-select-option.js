@@ -3,17 +3,17 @@ import layout from '../templates/components/ember-select-option';
 
 const {Component, computed} = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['ember-select-option'],
   classNameBindings: ['isHighlighted', 'isSelected'],
   layout: layout,
 
   isHighlighted: computed('item', 'highlighted', function() {
-    return this.get('item') == this.get('highlighted');
+    return this.get('item') === this.get('highlighted');
   }),
   
   isSelected: computed('item', 'selection', function() {
-    return this.get('item') == this.get('selection');
+    return this.get('item') === this.get('selection');
   }),
 
   mouseEnter: function(){
