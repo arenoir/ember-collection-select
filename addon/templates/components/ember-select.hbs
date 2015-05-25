@@ -1,0 +1,22 @@
+{{ember-select-selection selection=selection labelPath=optionLabelPath}}
+
+{{input type="text" value=searchTerm class="ember-select-input"}}
+
+{{#if hasSelection}}
+  <a action={{clearSelection}}>x</a>
+{{/if}}
+
+<span class="arrow"></span>
+
+{{#if isOpen}}
+  {{ember-select-options
+    content=_content 
+    selection=selection 
+    optionLabelPath=optionLabelPath
+    rowHeight=optionHeight
+    height=height
+    width=_width
+    highlighted=highlighted
+    select-item="select-item"
+  }}
+{{/if}}
