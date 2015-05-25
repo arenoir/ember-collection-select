@@ -1,7 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  setupController: function(controller) {
-    controller.getLetter('a');
+  model: function() {
+    return this.dictionary.get('alphabetical');
+  },
+
+  actions: {
+    search: function(term) {
+      this.dictionary.search(term);
+    }
   }
 });

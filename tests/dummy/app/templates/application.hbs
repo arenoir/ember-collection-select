@@ -1,4 +1,31 @@
-<h2 id="title">Welcome to Ember.js</h2>
+<div class="container">
+
+  {{outlet}}
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Ember Select </h2>
+      <h5>A select control built for Ember.js.</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+      </p>
+    </div>
+
+  </div>
 
 
-{{ember-select content=model optionLabelPath="word"}}
+  <div class="row">
+    <div class="col-sm-12">
+      {{ember-select content=model optionLabelPath="word" search="search"}}
+    </div>
+
+  </div>
+
+</div>
+
+
+

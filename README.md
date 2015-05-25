@@ -1,6 +1,15 @@
 # Ember-select
 
-This README outlines the details of collaborating on this Ember addon.
+A select component built for Ember.js. Uses Ember List View to incrementally render large lists of options.
+
+## Status
+
+Just a wip.
+
+## Demo
+
+http://arenoir.github.io/ember-select/
+
 
 ## Installation
 

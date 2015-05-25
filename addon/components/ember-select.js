@@ -2,7 +2,7 @@ import Ember from 'ember';
 import score from 'ember-select/utils/score';
 import layout from '../templates/components/ember-select';
 
-const {Component, computed, isBlank} = Ember;
+const {Component, observer, computed, isBlank} = Ember;
 
 export default Component.extend({
   classNames: ['ember-select'],
@@ -21,6 +21,12 @@ export default Component.extend({
 
       return score(word, term);
     };
+  }),
+
+  searchTermChanged: observer('searchTerm', function() {
+    var term = this.get('searchTerm');
+
+    this.sendAction('search', term);
   }),
 
   _content: computed('searchTerm', 'content.@each', function() {
