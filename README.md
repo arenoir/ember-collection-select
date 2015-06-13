@@ -4,11 +4,14 @@ A select component built for Ember.js. Uses Ember List View to incrementally ren
 
 ## Status
 
-Just a wip.
+This is a work in progress.  
+
+The name grab "ember-select" is as ambitious as my intentions for this add-on.  I believe there is a standard way a select component should work.  Select2,  selectize.js and chosen are all good examples.  This project aims to produce such a component built with ember.js for ember.js.
 
 ## Demo
 
-http://arenoir.github.io/ember-select/
+Checkout the [demo](http://arenoir.github.io/ember-select/).
+
 
 
 ## Usage
