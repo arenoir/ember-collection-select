@@ -43,15 +43,15 @@ This addon provides an `ember-select` component.
   </tr>
   <tr>
     <td valign="top"><code>optionValuePath</code></td>
-    <td valign="top">Selectize requires a unique hash for each option available. Set this to a path to such a property on your options. Example: <code>id</code></td>
+    <td valign="top"></td>
   </tr>
   <tr>
     <td valign="top"><code>optionLabelPath</code></td>
-    <td valign="top">Set this to a path where selectize can get a label for display. Computed properties are many times useful for this. If ember-select detects a "falsy" value, it will use an empty string. Example: <code>content.name</code></td>
+    <td valign="top">
   </tr>
   <tr>
     <td valign="top"><code>multiple</code></td>
-    <td valign="top">If <code>true</code> ember-select will enter multiple mode. <code>selection</code> is an array of options.</td>
+    <td valign="top"></td>
   </tr>
   <tr>
     <td valign="top"><code>loading</code></td>
@@ -71,7 +71,6 @@ This addon provides an `ember-select` component.
   </tr>
 </table>
 
-ember-select also supports [selectize's general options](https://github.com/brianreavis/selectize.js/blob/master/docs/usage.md#general), excluding `options` and `items` (equivalent to `content` and `selection` respectively).
 
 ### Actions
 
