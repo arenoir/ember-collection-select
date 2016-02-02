@@ -15,7 +15,7 @@ export default Component.extend({
   hasSelection: computed.notEmpty('selection'),
   height: 400,
   rowHeight: 75,
-  width: 0,
+  width: 100,
   scrollLeft: 0,
   scrollTop: 0,
   highlighted: null,

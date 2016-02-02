@@ -1,4 +1,4 @@
-# ember-collection-select
+# ember-collection-select [![Build Status](https://travis-ci.org/arenoir/ember-collection-select.svg?branch=master)](https://travis-ci.org/arenoir/ember-collection-select)
 
 A select component built for Ember.js. Uses Ember Collection to incrementally render large lists of options.
 
@@ -18,11 +18,9 @@ Checkout the [demo](http://arenoir.github.io/ember-collection-select/).
 This addon provides an `ember-collection-select` component.
 
 ```handlebars
-{{ember-collection-select
-  content=controller.items
-  optionLabelPath="fullname"
-  optionSelectionPath="fullname"
-  selection=model }}
+{{#ember-collection-select content=items selection=model as |item searchTerm|}}
+  {{item.fullname}}
+{{/ember-collection-select}}
 ```
 
 ### Properties
@@ -41,12 +39,8 @@ This addon provides an `ember-collection-select` component.
     <td valign="top">ember-collection-select will set this property to the selection that was made. Usually some property on a model, for example. If <code>multiple</code> is <code>true</code>, then it should be an array.</td>
   </tr>
   <tr>
-    <td valign="top"><code>optionValuePath</code></td>
+    <td valign="top"><code>rowHeight</code></td>
     <td valign="top"></td>
-  </tr>
-  <tr>
-    <td valign="top"><code>optionLabelPath</code></td>
-    <td valign="top">
   </tr>
   <tr>
     <td valign="top"><code>multiple</code></td>
@@ -61,12 +55,6 @@ This addon provides an `ember-collection-select` component.
       <code>scoreFunction</code>
     </td>
     <td valign="top"></td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <code>optionFunction</code>
-    </td>
-    <td valign="top">Used to format the option.</td>
   </tr>
 </table>
 
