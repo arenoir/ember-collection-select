@@ -2,7 +2,11 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-select',
+  name: 'ember-collection-select',
+  
+  included: function(app) {
+    this._super.included(app);
+  }
   
   // included: function(app) {
   //   this._super.included(app);

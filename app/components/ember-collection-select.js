@@ -1,0 +1,1 @@
+export { default } from 'ember-collection-select/components/ember-collection-select';

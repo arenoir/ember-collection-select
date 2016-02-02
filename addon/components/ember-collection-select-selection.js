@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/components/ember-select-selection';
+import layout from '../templates/components/ember-collection-select-selection';
 
 const {Component, get, computed, isBlank} = Ember;
 

@@ -1,0 +1,34 @@
+
+<div class="ember-collection-select-input">
+  {{ember-collection-select-selection selection=selection labelPath=selectionLabelPath}}
+
+  {{one-way-input value=serchTerm update=(action "search") focusIn=(action "inputFocus") focusOut=(action "inputFocusOut") }}
+
+  {{#if loading}}
+    <span class="loading">loading</span>
+  {{/if}}
+  <span class="arrow"></span>
+</div>
+
+{{#if isOpen}}
+
+  <div class="ember-collection-select-dropdown" style="height:{{height}}px;">
+    {{#ember-collection 
+      items=_content 
+      cell-layout=(fixed-grid-layout width rowHeight) 
+      estimated-height=height
+      estimated-width=width
+      buffer=collectionBuffer
+      scroll-left=scrollLeft
+      scroll-top=scrollTop
+      scroll-change=(action "scrollChange")
+      as |model index|}}
+
+
+      {{#component optionComponent model=(readonly model) highlighted=(readonly highlighted) selected=(readonly selected) highlight=(action "highlight") class="ember-collection-select-dropdown-option" as |option|}}
+        {{yield model searchTerm}}
+      {{/component}}
+
+    {{/ember-collection}}
+  </div>
+{{/if}}

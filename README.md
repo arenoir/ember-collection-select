@@ -1,25 +1,24 @@
-# Ember-select
+# ember-collection-select
 
-A select component built for Ember.js. Uses Ember List View to incrementally render large lists of options.
+A select component built for Ember.js. Uses Ember Collection to incrementally render large lists of options.
 
 ## Status
 
 This is a work in progress.  
 
-The name grab "ember-select" is as ambitious as my intentions for this add-on.  I believe there is a standard way a select component should work.  Select2,  selectize.js and chosen are all good examples.  This project aims to produce such a component built with ember.js for ember.js.
 
 ## Demo
 
-Checkout the [demo](http://arenoir.github.io/ember-select/).
+Checkout the [demo](http://arenoir.github.io/ember-collection-select/).
 
 
 
 ## Usage
 
-This addon provides an `ember-select` component.
+This addon provides an `ember-collection-select` component.
 
 ```handlebars
-{{ember-select
+{{ember-collection-select
   content=controller.items
   optionLabelPath="fullname"
   optionSelectionPath="fullname"
@@ -39,7 +38,7 @@ This addon provides an `ember-select` component.
   </tr>
   <tr>
     <td valign="top"><code>selection</code></td>
-    <td valign="top">ember-select will set this property to the selection that was made. Usually some property on a model, for example. If <code>multiple</code> is <code>true</code>, then it should be an array.</td>
+    <td valign="top">ember-collection-select will set this property to the selection that was made. Usually some property on a model, for example. If <code>multiple</code> is <code>true</code>, then it should be an array.</td>
   </tr>
   <tr>
     <td valign="top"><code>optionValuePath</code></td>
@@ -55,7 +54,7 @@ This addon provides an `ember-select` component.
   </tr>
   <tr>
     <td valign="top"><code>loading</code></td>
-    <td valign="top">When <code>true</code> ember-select will show loading span.</td>
+    <td valign="top">When <code>true</code> ember-collection-select will show loading span.</td>
   </tr>
   <tr>
     <td valign="top">

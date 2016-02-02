@@ -1,0 +1,322 @@
+// base styles
+$ember-collection-select-font-family: inherit;
+$ember-collection-select-font-smoothing: inherit;
+$ember-collection-select-font-size: 13px;
+$ember-collection-select-line-height: 18px;
+
+$ember-collection-select-color-text: #303030;
+$ember-collection-select-color-border: #d0d0d0;
+$ember-collection-select-color-highlight: rgba(125,168,208,0.2);
+$ember-collection-select-color-input: #fff;
+$ember-collection-select-color-input-full: $ember-collection-select-color-input;
+$ember-collection-select-color-disabled: #fafafa;
+$ember-collection-select-color-item: #f2f2f2;
+$ember-collection-select-color-item-text: $ember-collection-select-color-text;
+$ember-collection-select-color-item-border: #d0d0d0;
+$ember-collection-select-color-item-active: #e8e8e8;
+$ember-collection-select-color-item-active-text: $ember-collection-select-color-text;
+$ember-collection-select-color-item-active-border: #cacaca;
+$ember-collection-select-color-dropdown: #fff;
+$ember-collection-select-color-dropdown-border: $ember-collection-select-color-border;
+$ember-collection-select-color-dropdown-border-top: #f0f0f0;
+$ember-collection-select-color-dropdown-item-active: #f5fafd;
+$ember-collection-select-color-dropdown-item-active-text: #495c68;
+$ember-collection-select-color-dropdown-item-create-text: rgba(red($ember-collection-select-color-text), green($ember-collection-select-color-text), blue($ember-collection-select-color-text), 0.5);
+$ember-collection-select-color-dropdown-item-create-active-text: $ember-collection-select-color-dropdown-item-active-text;
+$ember-collection-select-color-optgroup: $ember-collection-select-color-dropdown;
+$ember-collection-select-color-optgroup-text: $ember-collection-select-color-text;
+$ember-collection-select-lighten-disabled-item: 30%;
+$ember-collection-select-lighten-disabled-item-text: 30%;
+$ember-collection-select-lighten-disabled-item-border: 30%;
+$ember-collection-select-opacity-disabled: 0.5;
+
+$ember-collection-select-shadow-input: inset 0 1px 1px rgba(0,0,0,0.1);
+$ember-collection-select-shadow-input-focus: inset 0 1px 2px rgba(0,0,0,0.15);
+$ember-collection-select-border: 1px solid $ember-collection-select-color-border;
+$ember-collection-select-dropdown-border: 1px solid $ember-collection-select-color-dropdown-border;
+$ember-collection-select-border-radius: 3px;
+
+$ember-collection-select-width-item-border: 0;
+
+$ember-collection-select-padding-x: 8px;
+$ember-collection-select-padding-y: 8px;
+$ember-collection-select-padding-item-x: 6px;
+$ember-collection-select-padding-item-y: 2px;
+$ember-collection-select-padding-dropdown-item-x: $ember-collection-select-padding-x;
+$ember-collection-select-padding-dropdown-item-y: 5px;
+$ember-collection-select-margin-item-x: 3px;
+$ember-collection-select-margin-item-y: 3px;
+
+$ember-collection-select-arrow-size: 5px;
+$ember-collection-select-arrow-color: #808080;
+$ember-collection-select-arrow-offset: 15px;
+$ember-collection-select-arrow-color:  #999;
+$ember-collection-select-arrow-width: 5px;
+
+$ember-collection-select-caret-margin: 0 2px 0 0;
+$ember-collection-select-caret-margin-rtl: 0 4px 0 -2px;
+
+@mixin ember-collection-select-border-radius ($radii) {
+  -webkit-border-radius: $radii;
+  -moz-border-radius: $radii;
+  border-radius: $radii;
+}
+@mixin ember-collection-select-unselectable () {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@mixin ember-collection-select-box-shadow ($shadow) {
+  -webkit-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+@mixin ember-collection-select-box-sizing ($type: border-box) {
+  -webkit-box-sizing: $type;
+  -moz-box-sizing: $type;
+  box-sizing: $type;
+}
+@mixin ember-collection-select-vertical-gradient ($color-top, $color-bottom) {
+    background-color: mix($color-top, $color-bottom, 60%);
+    background-image: -moz-linear-gradient(top, $color-top, $color-bottom); // FF 3.6+
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from($color-top), to($color-bottom)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(top, $color-top, $color-bottom); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(top, $color-top, $color-bottom); // Opera 11.10
+    background-image: linear-gradient(to bottom, $color-top, $color-bottom); // Standard, IE10
+    background-repeat: repeat-x;
+}
+
+.ember-list-view {
+  overflow: auto;
+  position: relative;
+}
+.ember-list-item-view {
+  position: absolute;
+  width: 100%;
+}
+
+
+.ember-collection-select {
+  position: relative;
+
+  input {
+
+  }
+
+  .clear {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+  }
+
+  .loading {
+    position: absolute;
+    top: 5px;
+    right: 25px;
+  }
+
+}
+
+.ember-collection-select-dropdown, .ember-collection-select-input, .ember-collection-select-input input {
+  color: $ember-collection-select-color-text;
+  font-family: $ember-collection-select-font-family;
+  font-size: $ember-collection-select-font-size;
+  line-height: $ember-collection-select-line-height;
+  -webkit-font-smoothing: $ember-collection-select-font-smoothing;
+}
+
+.ember-collection-select-input, .ember-collection-select-control.single .ember-collection-select-input.input-active {
+  background: $ember-collection-select-color-input;
+  cursor: text;
+  display: inline-block;
+}
+
+.ember-collection-select-input {
+  border: $ember-collection-select-border;
+  padding: $ember-collection-select-padding-y $ember-collection-select-padding-x;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  
+  @include ember-collection-select-box-sizing(border-box);
+  @include ember-collection-select-box-shadow($ember-collection-select-shadow-input);
+  @include ember-collection-select-border-radius($ember-collection-select-border-radius);
+
+  .ember-collection-select-control.multi &.has-items {
+    $padding-x: $ember-collection-select-padding-x;
+    $padding-top: $ember-collection-select-padding-y - $ember-collection-select-padding-item-y - $ember-collection-select-width-item-border;
+    $padding-bottom: $ember-collection-select-padding-y - $ember-collection-select-padding-item-y - $ember-collection-select-margin-item-y - $ember-collection-select-width-item-border;
+    padding: $padding-top $padding-x $padding-bottom;
+  }
+
+  &.full {
+    background-color: $ember-collection-select-color-input-full;
+  }
+  &.disabled, &.disabled * {
+    cursor: default !important;
+  }
+  &.focus {
+    @include ember-collection-select-box-shadow($ember-collection-select-shadow-input-focus);
+  }
+  &.dropdown-active {
+    @include ember-collection-select-border-radius($ember-collection-select-border-radius $ember-collection-select-border-radius 0 0);
+  }
+
+  > * {
+    vertical-align: baseline;
+    display: -moz-inline-stack;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+  }
+  .ember-collection-select-control.multi & > div {
+    cursor: pointer;
+    margin: 0 $ember-collection-select-margin-item-x $ember-collection-select-margin-item-y 0;
+    padding: $ember-collection-select-padding-item-y $ember-collection-select-padding-item-x;
+    background: $ember-collection-select-color-item;
+    color: $ember-collection-select-color-item-text;
+    border: $ember-collection-select-width-item-border solid $ember-collection-select-color-item-border;
+
+    &.active {
+      background: $ember-collection-select-color-item-active;
+      color: $ember-collection-select-color-item-active-text;
+      border: $ember-collection-select-width-item-border solid $ember-collection-select-color-item-active-border;
+    }
+  }
+  .ember-collection-select-control.multi &.disabled > div {
+    &, &.active {
+      color: lighten(desaturate($ember-collection-select-color-item-text, 100%), $ember-collection-select-lighten-disabled-item-text);
+      background: lighten(desaturate($ember-collection-select-color-item, 100%), $ember-collection-select-lighten-disabled-item);
+      border: $ember-collection-select-width-item-border solid lighten(desaturate($ember-collection-select-color-item-border, 100%), $ember-collection-select-lighten-disabled-item-border);
+    }
+  }
+  > input {
+    &::-ms-clear {
+      display: none;
+    }
+    display: inline-block !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    max-width: 100% !important;
+    margin: $ember-collection-select-caret-margin !important;
+    text-indent: 0 !important;
+    border: 0 none !important;
+    background: none !important;
+    line-height: inherit !important;
+    -webkit-user-select: auto !important;
+    @include ember-collection-select-box-shadow(none);
+    
+    &:focus { 
+      outline: none !important; 
+    }
+  }
+}
+
+.ember-collection-select-input::after {
+  content: ' ';
+  display: block;
+  clear: left;
+}
+
+.ember-collection-select-input.dropdown-active::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  background: $ember-collection-select-color-dropdown-border-top;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.ember-collection-select-dropdown {
+  position: absolute;
+  z-index: 10;
+  border: $ember-collection-select-dropdown-border;
+  background: $ember-collection-select-color-dropdown;
+  margin: -1px 0 0 0;
+  border-top: 0 none;
+  width: 100%;
+  
+  @include ember-collection-select-box-sizing(border-box);
+  @include ember-collection-select-box-shadow(0 1px 3px rgba(0,0,0,0.1));
+  @include ember-collection-select-border-radius(0 0 $ember-collection-select-border-radius $ember-collection-select-border-radius);
+
+  .ember-collection-select-option {
+    cursor: pointer;
+    overflow: hidden;
+    &--highlighted {
+      background: $ember-collection-select-color-highlight;
+      @include ember-collection-select-border-radius(1px);
+    }
+
+    &--selected {
+      background-color: $ember-collection-select-color-dropdown-item-active;
+      color: $ember-collection-select-color-dropdown-item-active-text;
+    }
+
+    .highlight {
+      text-decoration: underline;
+    }
+
+  }
+}
+
+
+.ember-collection-select.single .ember-collection-select-input {
+  &, input { cursor: pointer; }
+  &.input-active, &.input-active input { cursor: text; }
+
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: $ember-collection-select-arrow-offset;
+    margin-top: round((-1 * $ember-collection-select-arrow-size / 2));
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: $ember-collection-select-arrow-size $ember-collection-select-arrow-size 0 $ember-collection-select-arrow-size;
+    border-color: $ember-collection-select-arrow-color transparent transparent transparent;
+  }
+  &.dropdown-active:after {
+    margin-top: $ember-collection-select-arrow-size * -0.8;
+    border-width: 0 $ember-collection-select-arrow-size $ember-collection-select-arrow-size $ember-collection-select-arrow-size;
+    border-color: transparent transparent $ember-collection-select-arrow-color transparent;
+  }
+}
+
+.ember-collection-select.rtl {
+  &.single .ember-collection-select-input:after {
+    left: $ember-collection-select-arrow-offset;
+    right: auto;
+  }
+  .ember-collection-select-input > input {
+    margin: $ember-collection-select-caret-margin-rtl !important;
+  }
+}
+
+.ember-collection-select .ember-collection-select-input.disabled {
+  opacity: $ember-collection-select-opacity-disabled;
+  background-color: $ember-collection-select-color-disabled;
+}
+
+.ember-collection-select {
+  .arrow {
+    border-color: $ember-collection-select-arrow-color transparent transparent;
+    border-style: solid;
+    border-width: $ember-collection-select-arrow-width $ember-collection-select-arrow-width 0;
+    content: " ";
+    display: block;
+    height: 0;
+    margin-top: -ceil($ember-collection-select-arrow-width / 2);
+    position: absolute;
+    right: $ember-collection-select-padding-y;
+    top: $ember-collection-select-padding-x + $ember-collection-select-arrow-width + 1;
+    width: 0;
+  }
+}

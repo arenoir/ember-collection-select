@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function() {
-    return this.dictionary.get('alphabetical');
+    return this.dictionary;
   },
 
   actions: {

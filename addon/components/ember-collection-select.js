@@ -1,23 +1,30 @@
 import Ember from 'ember';
-import score from 'ember-select/utils/score';
-import layout from '../templates/components/ember-select';
+import score from 'ember-collection-select/utils/score';
+import layout from '../templates/components/ember-collection-select';
 
-const {Component, observer, computed, isBlank, get} = Ember;
+const {Component, computed, isBlank, isEmpty, get} = Ember;
 
 export default Component.extend({
-  classNames: ['ember-select'],
+  classNames: ['ember-collection-select'],
   classNameBindings: ['isOpen'],
   layout: layout,
-
+  optionComponent: 'ember-collection-select-option', 
   searchTerm: null,
-  content: null,
   multiple: false,
   isOpen: false,
   hasSelection: computed.notEmpty('selection'),
+  height: 400,
+  rowHeight: 75,
+  width: 0,
+  scrollLeft: 0,
+  scrollTop: 0,
+  highlighted: null,
+  selected: null,
+  collectionBuffer: 5,
 
   scoreFunction: computed(function() {
     return function(term, item) {
-      var word = item.word;
+      let word = item.word;
 
       return score(word, term);
     };
@@ -37,24 +44,17 @@ export default Component.extend({
     };
   }),
 
-  searchTermChanged: observer('searchTerm', function() {
-    var term = this.get('searchTerm');
+  _content: computed('searchTerm', 'content.[]', function() {
+    const searchTerm    = this.get('searchTerm');
+    const content       = this.get('content');
+    const scoreFunction = this.get('scoreFunction');
 
-    this.sendAction('search', term);
-  }),
-
-  _content: computed('searchTerm', 'content.@each', function() {
-    var searchTerm    = this.get('searchTerm');
-    var content       = this.get('content');
-    var scoreFunction = this.get('scoreFunction');
-    var scored; 
-
-    if (isBlank(searchTerm)) {
+    if (isBlank(searchTerm) || isEmpty(content)) {
       return content;
     }
 
-    scored = content.reduce(function(_scored, item, index) { 
-      var score = scoreFunction(searchTerm, item);
+    let scored = content.reduce(function(_scored, item, index) { 
+      let score = scoreFunction(searchTerm, item);
       if (score > 0) {
         _scored.push({
           score: score,
@@ -68,16 +68,17 @@ export default Component.extend({
       return b.score - a.score;
     });
 
-    var indexes = scored.map(function(i) {
+    let indexes = scored.map(function(i) {
       return i.index;
     });
 
-    return Ember.A(content.objectsAt(indexes));
+    return content.objectsAt(indexes);
   }),
+
 
   didInsertElement: function () {
     var width = this.$().width() - 2; //border
-    this.set('_width', width);
+    this.set('width', width);
   },
 
   addSelection: function(item) {
@@ -170,29 +171,63 @@ export default Component.extend({
 
   click: function() {
     this.$('input').focus();
-    this.toggleProperty('isOpen');
   },
 
   actions: {
+    inputFocus() {
+      this.send('openDropdown');
+    },
+
+    inputFocusOut() {
+      this.send('closeDropdown');
+    },
+
+    search(searchTerm) {
+      this.set('searchTerm', searchTerm);
+      this.sendAction('search', searchTerm);
+    },
+
+    scrollChange(left, top) {
+      this.set('scrollTop', top);
+    },
 
     'select-item': function(item) {
       this.addSelection(item);
     },
 
+
+
     highlightNextItem: function() {
-      var content = this.get('_content');
-      var highlighted = this.get('highlighted') || content.objectAt(0);
-      var index = content.indexOf(highlighted) + 1;
-      var next = content.objectAt(index);
+      const content = this.get('_content');
+      const highlighted = this.get('highlighted');
+      const scrollTop = this.get('scrollTop');
+      const height = this.get('height');
+
+      let index = highlighted ? content.indexOf(highlighted) + 1 : 0;
+      let next = content.objectAt(index);
+
+      let offset = (index + 1) * this.get('rowHeight');
+
+      if (scrollTop + height < offset) {
+        this.set('scrollTop', (offset - height));
+      }
 
       this.set('highlighted', next);
     },
 
     highlightPreviousItem: function() {
-      var content = this.get('_content');
-      var highlighted = this.get('highlighted') || content.objectAt(0);
-      var index = content.indexOf(highlighted) - 1;
-      var prev = content.objectAt(index);
+      const content = this.get('_content');
+      const scrollTop = this.get('scrollTop');
+      
+      let highlighted = this.get('highlighted') || content.objectAt(0);
+      let index = content.indexOf(highlighted) - 1;
+      let prev = content.objectAt(index);
+
+      let offset = index * this.get('rowHeight');
+
+      if (scrollTop > offset) {
+        this.set('scrollTop', (offset));
+      }
 
       this.set('highlighted', prev);
     },

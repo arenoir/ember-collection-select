@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
-moduleForComponent('ember-select-selection', 'Unit | Component | ember select selection', {
+moduleForComponent('ember-collection-select-selection', 'Unit | Component | ember select selection', {
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

@@ -20,13 +20,26 @@
 
   <div class="row">
     <div class="col-sm-12">
-      {{ember-select 
-        content=model 
+      {{#ember-collection-select 
+        content=model.alphabetical
         optionFunction=optionFunction 
         selectionLabelPath="word" 
         search="search"
         loading=loading
+        as |item searchTerm|
       }}
+
+        <div>
+          {{ember-collection-select-highlight item.word searchTerm}}
+        </div>
+        <div>
+          <small>
+            {{item.definition}}
+          </small>
+        </div>
+
+      {{/ember-collection-select}}
+
     </div>
 
   </div>

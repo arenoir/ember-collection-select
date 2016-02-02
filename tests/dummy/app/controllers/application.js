@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import ENV from '../config/environment';
 
 const {computed, get} = Ember;
 

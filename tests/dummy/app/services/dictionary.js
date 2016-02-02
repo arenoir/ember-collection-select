@@ -7,10 +7,15 @@ export default Service.extend({
 
   content: Ember.A([]),
 
-  _letters: Ember.A([]),
+  _letters: [],
 
-  sort: ['word:asc'],
-  alphabetical: computed.sort('content', 'sort'),  
+  //sort: ['word:asc'],
+  //alphabetical: computed.sort('content', 'sort'),  
+
+  alphabetical: computed('content', function() {
+    const content = this.get('content');
+    return content.sort();
+  }),
 
   search: function(term) {
     var letter;
@@ -25,19 +30,20 @@ export default Service.extend({
 
       letter = term.toLowerCase().trim().charAt(0);
 
-      if (!/[a-z]/.test(letter) || letters.contains(letter)) {
+      if (!/[a-z]/.test(letter) || letters.includes(letter)) {
         resolve();
         return;
       }
-
+      
       $.getJSON( ENV.baseURL + 'dictionary/' + letter + '.json').then(
         function(response) {
           letters.push(letter);
           content.pushObjects(response);
-          resolve();
+          resolve(response);
         },
         reject
       );
+
     });
   }
 

@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
-moduleForComponent('ember-select', 'Unit | Component | ember select', {
-  needs: ['component:ember-select-selection', 'component:ember-select-options']
+moduleForComponent('ember-collection-select', 'Unit | Component | ember select', {
+  needs: ['component:ember-collection-select-selection', 'component:ember-collection-select-option', 'component:one-way-input', 'component:ember-collection', 'component:ember-native-scrollable', 'helper:fixed-grid-layout']
 });
 
 test('it renders', function(assert) {
