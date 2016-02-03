@@ -7,7 +7,7 @@ export default Service.extend({
 
   content: Ember.A([]),
 
-  _letters: [],
+  _letters: Ember.A([]),
 
   //sort: ['word:asc'],
   //alphabetical: computed.sort('content', 'sort'),  
@@ -30,12 +30,12 @@ export default Service.extend({
 
       letter = term.toLowerCase().trim().charAt(0);
 
-      if (!/[a-z]/.test(letter) || letters.includes(letter)) {
+      if (!/[a-z]/.test(letter) || letters.contains(letter)) {
         resolve();
         return;
       }
       
-      $.getJSON( ENV.baseURL + 'dictionary/' + letter + '.json').then(
+      Ember.$.getJSON( ENV.baseURL + 'dictionary/' + letter + '.json').then(
         function(response) {
           letters.push(letter);
           content.pushObjects(response);

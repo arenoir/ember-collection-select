@@ -6,9 +6,9 @@ const {Component, computed, isBlank, isEmpty, get} = Ember;
 
 export default Component.extend({
   classNames: ['ember-collection-select'],
-  classNameBindings: ['isOpen'],
   layout: layout,
   optionComponent: 'ember-collection-select-option', 
+  selectedItemComponent: 'ember-collection-selected-item',
   searchTerm: null,
   multiple: false,
   isOpen: false,
@@ -19,8 +19,16 @@ export default Component.extend({
   scrollLeft: 0,
   scrollTop: 0,
   highlighted: null,
-  selected: null,
+  hasFocus: false,
+
+  
   collectionBuffer: 5,
+
+  classNameBindings: [
+    'isOpen:ember-collection-select--open',
+    'hasFocus:ember-collection-select--focus'
+  ],
+
 
   scoreFunction: computed(function() {
     return function(term, item) {
@@ -81,19 +89,6 @@ export default Component.extend({
     this.set('width', width);
   },
 
-  addSelection: function(item) {
-    var multiple  = this.get('multiple');
-    var selection = this.get('selection');
-
-    if (multiple) {
-      selection = selection || Ember.A([]);
-      selection.push(item);
-    } else {
-      selection = item;
-    }
-
-    this.set('selection', selection);
-  },
 
 
 
@@ -169,16 +164,19 @@ export default Component.extend({
     }
   }),
 
-  click: function() {
+
+  click() {
     this.$('input').focus();
   },
 
   actions: {
     inputFocus() {
+      this.set('hasFocus', true);
       this.send('openDropdown');
     },
 
     inputFocusOut() {
+      this.set('hasFocus', false);    
       this.send('closeDropdown');
     },
 
@@ -190,12 +188,6 @@ export default Component.extend({
     scrollChange(left, top) {
       this.set('scrollTop', top);
     },
-
-    'select-item': function(item) {
-      this.addSelection(item);
-    },
-
-
 
     highlightNextItem: function() {
       const content = this.get('_content');
@@ -236,13 +228,15 @@ export default Component.extend({
       this.set('highlighted', item);
     },
 
+    select(item) {
+      this.get('onchange')(item);
+      this.send('closeDropdown');
+    },
+
     selectHiglightedItem: function() {
       var item = this.get('highlighted');
 
-      if (item) {
-        this.addSelection(item);
-        this.send('closeDropdown');
-      }
+      this.send('select', item);
     },
 
     openDropdown: function() {
@@ -255,7 +249,13 @@ export default Component.extend({
 
     toggleDropdown: function() {
       this.toggleProperty('isOpen');
-    }
+    },
+
+    onbackspace: function() {
+      if (this.get('selection')) {
+        this.set('selection', null);
+      }
+    },
   }
 
 });

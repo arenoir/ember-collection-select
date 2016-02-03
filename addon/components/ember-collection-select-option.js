@@ -16,16 +16,24 @@ export default Component.extend({
     return this.get('model') === this.get('selection');
   }),
 
-  mouseEnter: function() {
+  mouseEnter() {
     const model = this.get('model');
 
-    //ctlr.triggerAction('highlight', item);
-    //ctlr.set('highlighted', model);
     this.sendAction('highlight', model);
   },
 
-  click: function() {
-    this.triggerAction({action: 'select-item'});
+  mouseDown(event) {
+    event.preventDefault();
+    return false;
+  },
+
+  click(event) {
+    const model = this.get('model');
+
+    this.sendAction('select', model);
+
+    event.preventDefault();
+    return false;
   }
 
 });

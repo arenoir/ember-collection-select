@@ -144,6 +144,8 @@ $ember-collection-select-caret-margin-rtl: 0 4px 0 -2px;
   @include ember-collection-select-box-shadow($ember-collection-select-shadow-input);
   @include ember-collection-select-border-radius($ember-collection-select-border-radius);
 
+
+
   .ember-collection-select-control.multi &.has-items {
     $padding-x: $ember-collection-select-padding-x;
     $padding-top: $ember-collection-select-padding-y - $ember-collection-select-padding-item-y - $ember-collection-select-width-item-border;
@@ -157,9 +159,7 @@ $ember-collection-select-caret-margin-rtl: 0 4px 0 -2px;
   &.disabled, &.disabled * {
     cursor: default !important;
   }
-  &.focus {
-    @include ember-collection-select-box-shadow($ember-collection-select-shadow-input-focus);
-  }
+
   &.dropdown-active {
     @include ember-collection-select-border-radius($ember-collection-select-border-radius $ember-collection-select-border-radius 0 0);
   }
@@ -212,6 +212,12 @@ $ember-collection-select-caret-margin-rtl: 0 4px 0 -2px;
     &:focus { 
       outline: none !important; 
     }
+  }
+}
+
+.ember-collection-select-input {
+  &--inactive {
+    width: 4px; opacity: 0; position: absolute; left: -10000px;
   }
 }
 
@@ -306,6 +312,12 @@ $ember-collection-select-caret-margin-rtl: 0 4px 0 -2px;
 }
 
 .ember-collection-select {
+  &--focus {
+    border-color: rgba(229, 103, 23, 0.8) !important;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(229, 103, 23, 0.6) !important;
+    outline: 0 none !important;
+  }
+
   .arrow {
     border-color: $ember-collection-select-arrow-color transparent transparent;
     border-style: solid;

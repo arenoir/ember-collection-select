@@ -14,36 +14,50 @@
       <p>
       </p>
     </div>
-
   </div>
 
-
-  <div class="row">
-    <div class="col-sm-12">
-      {{#ember-collection-select 
-        content=model.alphabetical
-        optionFunction=optionFunction 
-        selectionLabelPath="word" 
-        search="search"
-        loading=loading
-        as |item searchTerm|
-      }}
-
-        <div>
-          {{ember-collection-select-highlight item.word searchTerm}}
-        </div>
-        <div>
-          <small>
-            {{item.definition}}
-          </small>
-        </div>
-
-      {{/ember-collection-select}}
-
+  <form>
+    <div class="row">
+      <div class="col-sm-12">
+        {{input type="text"}}
+      </div>
     </div>
 
-  </div>
+    <div class="row">
+      <div class="col-sm-12">
+        {{#ember-collection-select 
+          content=model.alphabetical
+          onchange=(action (mut selection))
+          selection=selection
+          optionFunction=optionFunction 
+          selectionLabelPath="word" 
+          search="search"
+          loading=loading
+          placeholder="Select a word."
+          as |item searchTerm|
+        }}
 
+          <div>
+            {{ember-collection-select-highlight item.word searchTerm}}
+          </div>
+          <div>
+            <small>
+              {{item.definition}}
+            </small>
+          </div>
+
+        {{/ember-collection-select}}
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        {{input type="text"}}
+      </div>
+    </div>
+
+  </form>
 </div>
 
 

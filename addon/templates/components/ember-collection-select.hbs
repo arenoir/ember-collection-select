@@ -2,7 +2,17 @@
 <div class="ember-collection-select-input">
   {{ember-collection-select-selection selection=selection labelPath=selectionLabelPath}}
 
-  {{one-way-input value=serchTerm update=(action "search") focusIn=(action "inputFocus") focusOut=(action "inputFocusOut") }}
+  {{ember-collection-select-input 
+    optionsOpen=isOpen
+    selection=selection 
+    labelPath=selectionLabelPath 
+    _placeholder=placeholder
+    value=serchTerm 
+    update=(action "search") 
+    focusIn=(action "inputFocus") 
+    focusOut=(action "inputFocusOut")
+    onbackspace=(action "onbackspace")
+  }}
 
   {{#if loading}}
     <span class="loading">loading</span>
@@ -25,7 +35,7 @@
       as |model index|}}
 
 
-      {{#component optionComponent model=(readonly model) highlighted=(readonly highlighted) selected=(readonly selected) highlight=(action "highlight") class="ember-collection-select-dropdown-option" as |option|}}
+      {{#component optionComponent model=(readonly model) highlighted=(readonly highlighted) selected=(readonly selected) highlight=(action "highlight") select=(action "select") class="ember-collection-select-dropdown-option" as |option|}}
         {{yield model searchTerm}}
       {{/component}}
 
